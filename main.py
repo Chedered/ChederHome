@@ -10,9 +10,7 @@ def game_core_v5(number):
     while number != predict:
         for i in array:
             count += 1
-            if number == predict:
-                break
-            elif number >= predict+i: 
+            if number >= predict+i: 
                 predict += i
                 if number == predict:
                     break
