@@ -1,25 +1,22 @@
 import numpy as np
-number = np.random.randint(1,100)    # загадали число
+number = np.random.randint(1,100) 
 print ("Загадано число от 1 до 99")
 
-def game_core_v3(number):
+#Бинарный поиск
+
+def game_core_v4(number):
     count = 0
-    predict = np.random.randint(1,100)
-    dif = abs(number - predict) #Вместо того, чтобы накручивать счётчик, прибавляем/убавляем разницу.
-    #Так как счетчик не крутиться, если числа изначально равны, 
-    #а алгоритм всегда угадывает с первого раза,
-    #крутим счетчик при равенстве.
-    #Так количество попыток не будет падать ниже единицы на дистанции.
-    if number == predict:
-        count+=1
-    else:
-        while number != predict:
-            count+=1
-            if number > predict:
-                predict += dif
-            elif number < predict:
-                predict -= dif
-    return(count) # выход из цикла, если угадали
+    low = 1 # Нижняя граница поиска
+    high = 99 # Верхняя граница поиска
+    mid = 0 # Задаем переменную для середины, чтобы указать ее в условии цикла
+    while number != mid and low < high: 
+        count += 1
+        mid = (low + high) // 2
+        if number < mid: # Если загадонное число меньше середины, сдвигаем верхнюю границу к середине
+            high = mid - 1 # Вычитаем 1, так как сама серидина уже сравнивалась и не подошла под условие
+        elif number > mid: # Обратный случай, если загадонное число больше середины
+            low = mid + 1
+    return(count)
 
 def score_game(game_core):
     '''Запускаем игру 1000 раз, чтоб узнать как быстро игра угадывает число'''
@@ -32,4 +29,4 @@ def score_game(game_core):
     print(f"Ваш алгоритм угадывает число в среднем за {score} попыток")
     return(score)
 
-score_game(game_core_v3)
+score_game(game_core_v4) #В среднем выходит 5.434
